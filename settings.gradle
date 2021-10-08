@@ -1,3 +1,5 @@
 enableFeaturePreview("VERSION_CATALOGS")
 include ':app'
 include ':data'
+include ':domain'
+include ':shared:kotlin'

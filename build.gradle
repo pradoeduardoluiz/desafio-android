@@ -41,6 +41,7 @@ buildscript {
         classpath libs.kotlin.gradle.plugin
         classpath libs.dagger.hilt.plugin
         classpath libs.androidx.navigation.plugin
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.30'
     }
 }
 
