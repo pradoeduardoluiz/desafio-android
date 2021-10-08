@@ -4,6 +4,5 @@ data class UserModel(
     val id: String,
     val name: String,
     val imageUrl: String,
-    val username: String,
-    val updateDate: Long
+    val username: String
 )
