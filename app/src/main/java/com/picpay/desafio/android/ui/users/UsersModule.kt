@@ -7,11 +7,17 @@ import dagger.hilt.android.components.FragmentComponent
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.FragmentScoped
 import dagger.hilt.android.scopes.ViewModelScoped
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Qualifier
+import javax.inject.Singleton
 
 @Module
-@InstallIn(FragmentComponent::class, ViewModelComponent::class)
+@InstallIn(SingletonComponent::class, FragmentComponent::class, ViewModelComponent::class)
 object UsersModule {
+
+  @Provides
+  @Singleton
+  fun provideUserMapper() = UserMapper()
 
   @Provides
   @FragmentScoped

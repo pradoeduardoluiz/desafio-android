@@ -1,10 +1,16 @@
 package com.picpay.desafio.android.ui.users
 
+import android.util.Log
+import com.picpay.desafio.android.domain.usecases.shared.NoParams
+import com.picpay.desafio.android.domain.usecases.user.GetUsersUseCase
 import com.picpay.desafio.android.shared.android.dispatchers.DispatchersProvider
 import com.picpay.desafio.android.shared.android.mvi.StateViewModelImpl
+import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
 class UsersViewModel @Inject constructor(
+  private val getUsersUseCase: GetUsersUseCase,
+  private val mapper: UserMapper,
   dispatchersProvider: DispatchersProvider,
   @UsersStateQualifier initialState: UsersState
 ) : StateViewModelImpl<UsersState, UsersIntention>(
@@ -15,12 +21,32 @@ class UsersViewModel @Inject constructor(
   override suspend fun handleIntentions(intention: UsersIntention) {
     when (intention) {
       UsersIntention.Initialize -> initialize()
-      UsersIntention.Refresh -> TODO()
+      UsersIntention.Refresh -> refresh()
     }
   }
 
-  private fun initialize() {
-    TODO("Not yet implemented")
+  private suspend fun initialize() {
+    getUsers(forceRefresh = false)
+  }
+
+  private suspend fun refresh() {
+    getUsers(forceRefresh = true)
+  }
+
+  private suspend fun getUsers(forceRefresh: Boolean) {
+    runCatching { getUsersUseCase(NoParams) }
+      .onSuccess { result ->
+        result.collectLatest { users ->
+          updateState { copy(users = users.map(mapper::mapToState)) }
+        }
+      }
+      .onFailure { exception ->
+        Log.d(TAG, "getUsers: ${exception.localizedMessage}")
+      }
+  }
+
+  private companion object {
+    const val TAG = "UsersViewModel"
   }
 
 }
