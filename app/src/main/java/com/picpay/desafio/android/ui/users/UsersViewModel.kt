@@ -19,7 +19,8 @@ class UsersViewModel @Inject constructor(
   dispatchersProvider = dispatchersProvider
 ), UsersContract.ViewModel {
 
-  private var users = mutableListOf<UsersState.User>()
+  private var users = mutableListOf<UsersState.Holder>()
+  private val loading = mutableListOf(UsersState.Holder.Loading())
 
   override suspend fun handleIntentions(intention: UsersIntention) {
     when (intention) {
@@ -29,32 +30,36 @@ class UsersViewModel @Inject constructor(
   }
 
   private suspend fun initialize() {
-    getUsers(forceRefresh = false)
+    if (this.users.isEmpty()) getUsers(forceRefresh = false)
   }
 
   private suspend fun refresh() {
-    users.clear()
+    this.users = mutableListOf()
     getUsers(forceRefresh = true)
   }
 
   private suspend fun getUsers(forceRefresh: Boolean) {
-    updateState { copy(isLoading = true) }
+    loading()
     runCatching { getUsersUseCase(GetUsersUseCase.Params(forceRefresh)) }
       .onSuccess { result ->
         result.collectLatest { users ->
           this.users = users.map(mapper::mapToState).toMutableList()
-          updateState {
-            copy(
-              isLoading = false,
-              users = this@UsersViewModel.users
-            )
-          }
+          update(this.users)
         }
       }
       .onFailure { exception ->
-        updateState { copy(isLoading = false) }
+        update(this.users)
         Log.d(TAG, "getUsers: ${exception.localizedMessage}")
       }
+  }
+
+  private suspend fun loading() {
+    val users = this.users + this.loading
+    updateState { copy(users = users) }
+  }
+
+  private suspend fun update(users: List<UsersState.Holder>) {
+    updateState { copy(users = users) }
   }
 
   private companion object {

@@ -8,6 +8,7 @@ import com.picpay.desafio.android.domain.repository.UserRepository
 import com.picpay.desafio.android.shared.kotlin.GetCurrentTime
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import java.net.UnknownHostException
 
 class UserRepositoryImpl(
   private val service: PicPayService,
@@ -22,14 +23,22 @@ class UserRepositoryImpl(
 
     val hasNeedUpdateCache = currentTime - oldestUpdated >= CACHE_TIMEOUT
     if (hasNeedUpdateCache || forceRefresh) {
-      val response = service.getUsers()
-      val users = response.map { user -> mapper.mapToDbo(user, updateDate = currentTime) }
-      dao.deleteAll()
-      dao.insert(users)
+      try {
+        val response = service.getUsers()
+        val users = response.map { user -> mapper.mapToDbo(user, updateDate = currentTime) }
+        dao.deleteAll()
+        dao.insert(users)
+      } catch (exception: Exception) {
+        when (exception) {
+          is UnknownHostException -> return getUsersDao()
+          else -> throw exception
+        }
+      }
     }
-
-    return dao.getUsers().map { users -> users.map(mapper::mapToModel) }
+    return getUsersDao()
   }
+
+  private fun getUsersDao() = dao.getUsers().map { users -> users.map(mapper::mapToModel) }
 
   private companion object {
     const val CACHE_TIMEOUT = 300000

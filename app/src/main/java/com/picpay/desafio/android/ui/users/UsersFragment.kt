@@ -2,7 +2,6 @@ package com.picpay.desafio.android.ui.users
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.picpay.desafio.android.R
@@ -38,10 +37,7 @@ class UsersFragment : Fragment(R.layout.users_fragment) {
 
   private fun bindOutputs() {
     watch(viewModel.state) { state ->
-      with(binding) {
-        userListProgressBar.isVisible = state.isLoading
-        adapter.submitList(state.users)
-      }
+      adapter.submitList(state.users)
     }
   }
 
