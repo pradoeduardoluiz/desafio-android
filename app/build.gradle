@@ -23,7 +23,9 @@ android {
     viewBinding = true
   }
   buildTypes {
-    debug {}
+    debug {
+      minifyEnabled false
+    }
 
     release {
       minifyEnabled true
@@ -70,12 +72,9 @@ dependencies {
   implementation libs.google.material
 
   implementation libs.coil.core
-  implementation libs.shimmer
 
   implementation libs.dagger.hilt.core
   kapt libs.dagger.hilt.compiler
-
-//  debugImplementation libs.leakcanary
 
   testImplementation libs.junit.library
   testImplementation libs.mockk

@@ -37,12 +37,13 @@ class UsersFragment : Fragment(R.layout.users_fragment) {
 
   private fun bindOutputs() {
     watch(viewModel.state) { state ->
-      adapter.submitList(state.users)
+      adapter.submitList(state.items)
     }
   }
 
   private fun bindRecyclerView() {
     binding.users.adapter = adapter
+    adapter.onRetryClick = { viewModel.publish(UsersIntention.Refresh) }
   }
 
 }

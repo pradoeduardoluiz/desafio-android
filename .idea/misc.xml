@@ -10,6 +10,7 @@
       <map>
         <entry key="../../../../../../layout/custom_preview.xml" value="0.21851851851851853" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.10526315789473684" />
+        <entry key="app/src/main/res/layout/list_item_error.xml" value="0.265625" />
         <entry key="app/src/main/res/layout/list_item_loading.xml" value="0.165" />
         <entry key="app/src/main/res/layout/list_item_user.xml" value="0.335" />
         <entry key="app/src/main/res/layout/users_fragment.xml" value="0.25" />

@@ -10,22 +10,30 @@ import androidx.viewbinding.ViewBinding
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.picpay.desafio.android.R
+import com.picpay.desafio.android.databinding.ListItemErrorBinding
 import com.picpay.desafio.android.databinding.ListItemLoadingBinding
 import com.picpay.desafio.android.databinding.ListItemUserBinding
 
 class UsersAdapter : ListAdapter<UsersState.Holder, UsersAdapter.ViewHolder>(DIFF_CALLBACK) {
 
+  lateinit var onRetryClick: () -> Unit
+
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
     return when (viewType) {
-      UsersState.Holder.User.VIEW_HOLDER_ID -> {
+      UsersState.Holder.USER_VIEW_HOLDER_TYPE -> {
         val binding =
           ListItemUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         UserViewHolder(binding)
       }
-      UsersState.Holder.Loading.VIEW_HOLDER_ID -> {
+      UsersState.Holder.LOADING_VIEW_HOLDER_TYPE -> {
         val binding =
           ListItemLoadingBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         LoadingViewHolder(binding)
+      }
+      UsersState.Holder.ERROR_VIEW_HOLDER_TYPE -> {
+        val binding =
+          ListItemErrorBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        ErrorViewHolder(binding)
       }
       else -> throw IllegalArgumentException()
     }
@@ -36,6 +44,7 @@ class UsersAdapter : ListAdapter<UsersState.Holder, UsersAdapter.ViewHolder>(DIF
     when (holder) {
       is UserViewHolder -> holder.bind(item as UsersState.Holder.User)
       is LoadingViewHolder -> holder.bind()
+      is ErrorViewHolder -> holder.bind()
     }
   }
 
@@ -68,6 +77,15 @@ class UsersAdapter : ListAdapter<UsersState.Holder, UsersAdapter.ViewHolder>(DIF
       with(binding) {
         progressBar.isVisible = true
       }
+    }
+  }
+
+  private inner class ErrorViewHolder(
+    private val binding: ListItemErrorBinding
+  ) : ViewHolder(binding) {
+
+    fun bind() {
+      binding.retry.setOnClickListener { onRetryClick() }
     }
   }
 

@@ -20,7 +20,8 @@ class UsersViewModel @Inject constructor(
 ), UsersContract.ViewModel {
 
   private var users = mutableListOf<UsersState.Holder>()
-  private val loading = mutableListOf(UsersState.Holder.Loading())
+  private val loading = mutableListOf(UsersState.Holder.Loading)
+  private val error = mutableListOf(UsersState.Holder.Error)
 
   override suspend fun handleIntentions(intention: UsersIntention) {
     when (intention) {
@@ -44,22 +45,27 @@ class UsersViewModel @Inject constructor(
       .onSuccess { result ->
         result.collectLatest { users ->
           this.users = users.map(mapper::mapToState).toMutableList()
-          update(this.users)
+          updateItems(this.users)
         }
       }
       .onFailure { exception ->
-        update(this.users)
+        error()
         Log.d(TAG, "getUsers: ${exception.localizedMessage}")
       }
   }
 
   private suspend fun loading() {
-    val users = this.users + this.loading
-    updateState { copy(users = users) }
+    val items = this.users + this.loading
+    updateState { copy(items = items) }
   }
 
-  private suspend fun update(users: List<UsersState.Holder>) {
-    updateState { copy(users = users) }
+  private suspend fun updateItems(items: List<UsersState.Holder>) {
+    updateState { copy(items = items) }
+  }
+
+  private suspend fun error() {
+    val items = this.users + this.error
+    updateState { copy(items = items) }
   }
 
   private companion object {

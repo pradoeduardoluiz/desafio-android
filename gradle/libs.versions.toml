@@ -53,10 +53,6 @@ moshi-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.re
 #
 okhttp-logginginterceptor = "com.squareup.okhttp3:logging-interceptor:4.9.0"
 #
-permissionx = "com.permissionx.guolindev:permissionx:1.4.0"
-#
-shimmer = "com.facebook.shimmer:shimmer:0.5.0"
-#
 dagger-hilt-core = "com.google.dagger:hilt-android:2.39.1"
 #dagger-hilt-plugin = "com.google.dagger:hilt-android-gradle-plugin:2.39.1"
 dagger-hilt-compiler = "com.google.dagger:hilt-android-compiler:2.39.1"
