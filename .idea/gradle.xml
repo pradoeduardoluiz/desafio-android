@@ -17,6 +17,7 @@
             <option value="$PROJECT_DIR$/shared" />
             <option value="$PROJECT_DIR$/shared/android" />
             <option value="$PROJECT_DIR$/shared/kotlin" />
+            <option value="$PROJECT_DIR$/shared/test" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

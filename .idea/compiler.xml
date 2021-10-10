@@ -6,6 +6,7 @@
       <module name="desafio-android.data" target="11" />
       <module name="desafio-android.domain" target="1.8" />
       <module name="desafio-android.shared.android" target="11" />
+      <module name="desafio-android.shared.test" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
