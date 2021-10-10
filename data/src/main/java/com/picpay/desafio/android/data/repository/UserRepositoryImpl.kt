@@ -16,12 +16,12 @@ class UserRepositoryImpl(
   private val getCurrentTime: GetCurrentTime
 ) : UserRepository {
 
-  override suspend fun getUsers(): Flow<List<UserModel>> {
+  override suspend fun getUsers(forceRefresh: Boolean): Flow<List<UserModel>> {
     val currentTime = getCurrentTime()
     val oldestUpdated = dao.getOldestRegisterUpdated() ?: 0
 
     val hasNeedUpdateCache = currentTime - oldestUpdated >= CACHE_TIMEOUT
-    if (hasNeedUpdateCache) {
+    if (hasNeedUpdateCache || forceRefresh) {
       val response = service.getUsers()
       val users = response.map { user -> mapper.mapToDbo(user, updateDate = currentTime) }
       dao.deleteAll()

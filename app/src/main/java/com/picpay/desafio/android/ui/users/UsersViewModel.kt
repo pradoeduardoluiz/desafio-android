@@ -1,7 +1,6 @@
 package com.picpay.desafio.android.ui.users
 
 import android.util.Log
-import com.picpay.desafio.android.domain.usecases.shared.NoParams
 import com.picpay.desafio.android.domain.usecases.user.GetUsersUseCase
 import com.picpay.desafio.android.shared.android.dispatchers.DispatchersProvider
 import com.picpay.desafio.android.shared.android.mvi.StateViewModelImpl
@@ -20,6 +19,8 @@ class UsersViewModel @Inject constructor(
   dispatchersProvider = dispatchersProvider
 ), UsersContract.ViewModel {
 
+  private var users = mutableListOf<UsersState.User>()
+
   override suspend fun handleIntentions(intention: UsersIntention) {
     when (intention) {
       UsersIntention.Initialize -> initialize()
@@ -32,18 +33,20 @@ class UsersViewModel @Inject constructor(
   }
 
   private suspend fun refresh() {
+    users.clear()
     getUsers(forceRefresh = true)
   }
 
   private suspend fun getUsers(forceRefresh: Boolean) {
     updateState { copy(isLoading = true) }
-    runCatching { getUsersUseCase(NoParams) }
+    runCatching { getUsersUseCase(GetUsersUseCase.Params(forceRefresh)) }
       .onSuccess { result ->
         result.collectLatest { users ->
+          this.users = users.map(mapper::mapToState).toMutableList()
           updateState {
             copy(
               isLoading = false,
-              users = users.map(mapper::mapToState)
+              users = this@UsersViewModel.users
             )
           }
         }

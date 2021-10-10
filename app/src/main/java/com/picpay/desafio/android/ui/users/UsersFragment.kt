@@ -30,7 +30,10 @@ class UsersFragment : Fragment(R.layout.users_fragment) {
   }
 
   private fun bindInputs() = with(binding) {
-
+    refresh.setOnRefreshListener {
+      viewModel.publish(UsersIntention.Refresh)
+      refresh.isRefreshing = false
+    }
   }
 
   private fun bindOutputs() {
