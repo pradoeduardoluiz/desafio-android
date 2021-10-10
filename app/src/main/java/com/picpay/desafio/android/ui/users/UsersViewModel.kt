@@ -13,6 +13,13 @@ class UsersViewModel @Inject constructor(
 ), UsersContract.ViewModel {
 
   override suspend fun handleIntentions(intention: UsersIntention) {
+    when (intention) {
+      UsersIntention.Initialize -> initialize()
+      UsersIntention.Refresh -> TODO()
+    }
+  }
+
+  private fun initialize() {
     TODO("Not yet implemented")
   }
 
