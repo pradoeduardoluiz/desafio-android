@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/data" />
             <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/shared" />
+            <option value="$PROJECT_DIR$/shared/android" />
             <option value="$PROJECT_DIR$/shared/kotlin" />
           </set>
         </option>

@@ -2,9 +2,10 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.7">
-      <module name="desafio-android.app" target="1.8" />
-      <module name="desafio-android.data" target="1.8" />
+      <module name="desafio-android.app" target="11" />
+      <module name="desafio-android.data" target="11" />
       <module name="desafio-android.domain" target="1.8" />
+      <module name="desafio-android.shared.android" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
