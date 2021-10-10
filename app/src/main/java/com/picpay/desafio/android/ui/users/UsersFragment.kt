@@ -8,11 +8,15 @@ import com.picpay.desafio.android.R
 import com.picpay.desafio.android.databinding.UsersFragmentBinding
 import com.picpay.desafio.android.shared.android.extensions.viewBinding
 import com.picpay.desafio.android.shared.android.extensions.watch
+import javax.inject.Inject
 
 class UsersFragment : Fragment(R.layout.users_fragment) {
 
   private val binding by viewBinding(UsersFragmentBinding::bind)
   private val viewModel: UsersContract.ViewModel by viewModels<UsersViewModel>()
+
+  @Inject
+  lateinit var adapter: UsersAdapter
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
@@ -32,7 +36,7 @@ class UsersFragment : Fragment(R.layout.users_fragment) {
   }
 
   private fun bindRecyclerView() {
-
+    binding.users.adapter = adapter
   }
 
 }
