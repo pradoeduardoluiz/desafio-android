@@ -1,4 +1,4 @@
-package com.picpay.desafio.android.ui
+package com.picpay.desafio.android.ui.users
 
 sealed class UsersIntention {
   object Initialize : UsersIntention()

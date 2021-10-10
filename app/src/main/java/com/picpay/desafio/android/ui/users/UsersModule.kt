@@ -1,4 +1,4 @@
-package com.picpay.desafio.android.ui
+package com.picpay.desafio.android.ui.users
 
 import dagger.Module
 import dagger.Provides

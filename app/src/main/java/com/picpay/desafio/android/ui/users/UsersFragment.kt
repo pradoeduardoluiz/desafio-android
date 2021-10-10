@@ -1,4 +1,4 @@
-package com.picpay.desafio.android.ui
+package com.picpay.desafio.android.ui.users
 
 import android.os.Bundle
 import android.view.View

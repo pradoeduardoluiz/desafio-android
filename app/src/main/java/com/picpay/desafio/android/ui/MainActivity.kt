@@ -1,10 +1,11 @@
-package com.picpay.desafio.android
+package com.picpay.desafio.android.ui
 
 import android.os.Bundle
 import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
+import com.picpay.desafio.android.R
 import com.picpay.desafio.android.databinding.ActivityMainBinding
 import com.picpay.desafio.android.navigation.Navigator
 import com.picpay.desafio.android.shared.android.extensions.viewBinding
