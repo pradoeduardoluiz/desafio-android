@@ -5,9 +5,11 @@ import com.picpay.desafio.android.domain.usecases.shared.NoParams
 import com.picpay.desafio.android.domain.usecases.user.GetUsersUseCase
 import com.picpay.desafio.android.shared.android.dispatchers.DispatchersProvider
 import com.picpay.desafio.android.shared.android.mvi.StateViewModelImpl
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
+@HiltViewModel
 class UsersViewModel @Inject constructor(
   private val getUsersUseCase: GetUsersUseCase,
   private val mapper: UserMapper,
@@ -34,13 +36,20 @@ class UsersViewModel @Inject constructor(
   }
 
   private suspend fun getUsers(forceRefresh: Boolean) {
+    updateState { copy(isLoading = true) }
     runCatching { getUsersUseCase(NoParams) }
       .onSuccess { result ->
         result.collectLatest { users ->
-          updateState { copy(users = users.map(mapper::mapToState)) }
+          updateState {
+            copy(
+              isLoading = false,
+              users = users.map(mapper::mapToState)
+            )
+          }
         }
       }
       .onFailure { exception ->
+        updateState { copy(isLoading = false) }
         Log.d(TAG, "getUsers: ${exception.localizedMessage}")
       }
   }

@@ -4,6 +4,7 @@ import com.picpay.desafio.android.navigation.Navigator
 import com.picpay.desafio.android.navigation.NavigatorImpl
 import com.picpay.desafio.android.shared.android.dispatchers.AppDispatchersProvider
 import com.picpay.desafio.android.shared.android.dispatchers.DispatchersProvider
+import com.picpay.desafio.android.ui.users.UserMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,5 +24,9 @@ object AppModule {
   fun providerNavigator(
     dispatchersProvider: DispatchersProvider
   ): Navigator = NavigatorImpl(dispatchersProvider)
+
+  @Provides
+  @Singleton
+  fun provideUserMapper() = UserMapper()
 
 }

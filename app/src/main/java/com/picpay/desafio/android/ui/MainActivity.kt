@@ -9,8 +9,10 @@ import com.picpay.desafio.android.R
 import com.picpay.desafio.android.databinding.ActivityMainBinding
 import com.picpay.desafio.android.navigation.Navigator
 import com.picpay.desafio.android.shared.android.extensions.viewBinding
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
   private val binding by viewBinding(ActivityMainBinding::inflate)

@@ -2,14 +2,17 @@ package com.picpay.desafio.android.ui.users
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.databinding.UsersFragmentBinding
 import com.picpay.desafio.android.shared.android.extensions.viewBinding
 import com.picpay.desafio.android.shared.android.extensions.watch
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class UsersFragment : Fragment(R.layout.users_fragment) {
 
   private val binding by viewBinding(UsersFragmentBinding::bind)
@@ -23,6 +26,7 @@ class UsersFragment : Fragment(R.layout.users_fragment) {
     bindRecyclerView()
     bindInputs()
     bindOutputs()
+    viewModel.publish(UsersIntention.Initialize)
   }
 
   private fun bindInputs() = with(binding) {
@@ -31,7 +35,10 @@ class UsersFragment : Fragment(R.layout.users_fragment) {
 
   private fun bindOutputs() {
     watch(viewModel.state) { state ->
-
+      with(binding) {
+        userListProgressBar.isVisible = state.isLoading
+        adapter.submitList(state.users)
+      }
     }
   }
 
