@@ -1,84 +1,86 @@
 plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
-    id 'kotlin-kapt'
-    id 'dagger.hilt.android.plugin'
-    id 'androidx.navigation.safeargs.kotlin'
+  id 'com.android.application'
+  id 'kotlin-android'
+  id 'kotlin-kapt'
+  id 'dagger.hilt.android.plugin'
+  id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
-    compileSdkVersion 31
-    defaultConfig {
-        applicationId "com.picpay.desafio.android"
-        minSdkVersion 21
-        targetSdkVersion 31
-        versionCode 1
-        versionName "1.0"
+  compileSdkVersion 31
+  defaultConfig {
+    applicationId "com.picpay.desafio.android"
+    minSdkVersion 21
+    targetSdkVersion 31
+    versionCode 1
+    versionName "1.0"
 
-        vectorDrawables.useSupportLibrary = true
+    vectorDrawables.useSupportLibrary = true
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+  }
+  buildFeatures {
+    viewBinding = true
+  }
+  buildTypes {
+    debug {}
+
+    release {
+      minifyEnabled true
+      shrinkResources true
+      proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
     }
-    buildTypes {
-        debug {}
+  }
 
-        release {
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
+  compileOptions {
+    sourceCompatibility 1.8
+    targetCompatibility 1.8
+  }
 
-    compileOptions {
-        sourceCompatibility 1.8
-        targetCompatibility 1.8
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
-    }
+  kotlinOptions {
+    jvmTarget = JavaVersion.VERSION_1_8.toString()
+  }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation libs.androidx.core
-    implementation libs.androidx.appcompat
-    implementation libs.androidx.constraintlayout
-    implementation libs.androidx.activity
-    implementation libs.androidx.fragment
-    implementation libs.androidx.recyclerview
-    implementation libs.androidx.lifecycle.viewmodel
-    implementation libs.androidx.lifecycle.runtime
-    implementation libs.androidx.lifecycle.common
-    implementation libs.androidx.lifecycle.livedata
-    implementation libs.androidx.lifecycle.ext
-    implementation libs.androidx.swiperefreshlayout
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
+  implementation project(":shared:android")
 
-    kapt libs.androidx.hilt.compiler
+  implementation libs.androidx.core
+  implementation libs.androidx.appcompat
+  implementation libs.androidx.constraintlayout
+  implementation libs.androidx.activity
+  implementation libs.androidx.fragment
+  implementation libs.androidx.recyclerview
+  implementation libs.androidx.lifecycle.viewmodel
+  implementation libs.androidx.lifecycle.runtime
+  implementation libs.androidx.lifecycle.common
+  implementation libs.androidx.lifecycle.livedata
+  implementation libs.androidx.lifecycle.ext
+  implementation libs.androidx.swiperefreshlayout
 
-    implementation libs.androidx.navigation.library
-    implementation libs.androidx.navigation.ui
+  kapt libs.androidx.hilt.compiler
 
-    implementation libs.google.material
+  implementation libs.androidx.navigation.library
+  implementation libs.androidx.navigation.ui
 
-    implementation libs.coil.core
-    implementation libs.shimmer
+  implementation libs.google.material
 
-    implementation libs.dagger.hilt.core
-    kapt libs.dagger.hilt.compiler
+  implementation libs.coil.core
+  implementation libs.shimmer
+
+  implementation libs.dagger.hilt.core
+  kapt libs.dagger.hilt.compiler
 
 //  debugImplementation libs.leakcanary
 
-    testImplementation libs.junit.library
-    testImplementation libs.mockk
-    testImplementation libs.coroutines.test
-    androidTestImplementation libs.junit.ext
+  testImplementation libs.junit.library
+  testImplementation libs.mockk
+  testImplementation libs.coroutines.test
+  androidTestImplementation libs.junit.ext
 
-    androidTestImplementation "androidx.test:runner:$test_runner_version"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
-    androidTestImplementation "androidx.test:core-ktx:$core_ktx_test_version"
+  androidTestImplementation "androidx.test:runner:$test_runner_version"
+  androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
+  androidTestImplementation "androidx.test:core-ktx:$core_ktx_test_version"
 }
