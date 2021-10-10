@@ -17,9 +17,21 @@ class UserRepositoryImpl(
 ) : UserRepository {
 
     override suspend fun getUsers(): Flow<List<UserModel>> {
-        val response = service.getUsers()
-        val usersDbo = response.map { user -> mapper.mapToDbo(user, updateDate = getCurrentTime()) }
-        dao.upsert(usersDbo)
+        val currentTime = getCurrentTime()
+        val oldestUpdated = dao.getOldestRegisterUpdated() ?: 0
+
+        val hasNeedUpdateCache = currentTime - oldestUpdated >= CACHE_TIMEOUT
+        if (hasNeedUpdateCache) {
+            val response = service.getUsers()
+            val users = response.map { user -> mapper.mapToDbo(user, updateDate = currentTime) }
+            dao.deleteAll()
+            dao.insert(users)
+        }
+
         return dao.getUsers().map { users -> users.map(mapper::mapToModel) }
+    }
+
+    private companion object {
+        const val CACHE_TIMEOUT = 30000
     }
 }
