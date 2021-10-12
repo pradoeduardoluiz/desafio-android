@@ -24,7 +24,7 @@ class UserMapperTest {
             name = "name",
             imageUrl = "imageUrl",
             username = "username",
-            updateDate = 10000
+            updateDate = 10_000
         )
 
         val actual = mapper.mapToModel(current)
@@ -40,7 +40,7 @@ class UserMapperTest {
             name = "name",
             imageUrl = "imageUrl",
             username = "username",
-            updateDate = 10000
+            updateDate = 10_000
         )
 
         val current = UserDTO(
@@ -50,7 +50,7 @@ class UserMapperTest {
             username = "username"
         )
 
-        val actual = mapper.mapToDbo(current, 10000)
+        val actual = mapper.mapToDbo(current, 10_000)
         Assert.assertEquals(expected, actual)
     }
 
