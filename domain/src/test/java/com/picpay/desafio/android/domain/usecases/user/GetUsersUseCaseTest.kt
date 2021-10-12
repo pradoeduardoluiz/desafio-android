@@ -2,7 +2,6 @@ package com.picpay.desafio.android.domain.usecases.user
 
 import com.picpay.desafio.android.domain.models.UserModel
 import com.picpay.desafio.android.domain.repository.UserRepository
-import com.picpay.desafio.android.domain.usecases.shared.NoParams
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.confirmVerified
@@ -46,13 +45,13 @@ class GetUsersUseCaseTest {
 
         val usersFlow = flowOf(expected)
 
-        coEvery { getUsersUseCase(NoParams) } returns usersFlow
+        coEvery { userRepository.getUsers(forceRefresh = false) } returns usersFlow
 
-        getUsersUseCase(NoParams).collect { actual ->
+        getUsersUseCase(GetUsersUseCase.Params(forceRefresh = false)).collect { actual ->
             Assert.assertEquals(expected, actual)
         }
 
-        coVerify(exactly = 1) { getUsersUseCase(NoParams) }
+        coVerify(exactly = 1) { userRepository.getUsers(forceRefresh = false) }
 
         confirmVerified(userRepository)
     }
