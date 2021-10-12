@@ -80,7 +80,7 @@ class UserRepositoryImplTest {
         coEvery { dao.getUsers() } returns usersFlow
         coEvery { mapper.mapToModel(dbo) } returns model
 
-        val actualFlow = userRepository.getUsers()
+        val actualFlow = userRepository.getUsers(forceRefresh = false)
         actualFlow.collect { actual ->
             Assert.assertEquals(expected, actual)
         }
@@ -128,7 +128,7 @@ class UserRepositoryImplTest {
         coEvery { dao.getUsers() } returns usersFlow
         coEvery { mapper.mapToModel(dbo) } returns model
 
-        val actualFlow = userRepository.getUsers()
+        val actualFlow = userRepository.getUsers(forceRefresh = false)
         actualFlow.collect { actual ->
             Assert.assertEquals(expected, actual)
         }
@@ -173,7 +173,7 @@ class UserRepositoryImplTest {
 
         val usersFlow = flowOf(dbos)
 
-        val oldestUpdatedRegister = 999_999_970_000
+        val oldestUpdatedRegister: Long = 999_999_700_000
 
         coEvery { getCurrentTime() } returns currentTimeMock
         coEvery { dao.getOldestRegisterUpdated() } returns oldestUpdatedRegister
@@ -184,7 +184,7 @@ class UserRepositoryImplTest {
         coEvery { dao.getUsers() } returns usersFlow
         coEvery { mapper.mapToModel(dbo) } returns model
 
-        val actualFlow = userRepository.getUsers()
+        val actualFlow = userRepository.getUsers(forceRefresh = false)
         actualFlow.collect { actual ->
             Assert.assertEquals(expected, actual)
         }
