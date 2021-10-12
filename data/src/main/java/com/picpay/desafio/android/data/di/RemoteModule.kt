@@ -19,9 +19,9 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object RemoteModule {
 
-    private const val CONNECT_TIMEOUT = 10000L
-    private const val WRITE_TIMEOUT = 10000L
-    private const val READ_TIMEOUT = 30000L
+    private const val CONNECT_TIMEOUT = 10_000L
+    private const val WRITE_TIMEOUT = 10_000L
+    private const val READ_TIMEOUT = 30_000L
     private const val BASE_URL = "https://609a908e0f5a13001721b74e.mockapi.io/picpay/api/"
 
     @Provides

@@ -1,6 +1,5 @@
 package com.picpay.desafio.android.data.source.cache.dbo
 
-
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.picpay.desafio.android.data.source.cache.DatabaseConstants

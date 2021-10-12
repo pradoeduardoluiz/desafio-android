@@ -17,14 +17,10 @@ object CacheModule {
 
     @Provides
     @Singleton
-    fun provideDatabaseHelper(@ApplicationContext context: Context): PicPayDatabase {
-        return DatabaseHelper(context).buildDataBase()
-    }
+    fun provideDatabaseHelper(@ApplicationContext context: Context): PicPayDatabase =
+        DatabaseHelper(context).buildDataBase()
 
     @Provides
     @Singleton
-    fun provideUserDAO(database: PicPayDatabase): UserDAO {
-        return database.userDao()
-    }
-
+    fun provideUserDAO(database: PicPayDatabase): UserDAO = database.userDao()
 }

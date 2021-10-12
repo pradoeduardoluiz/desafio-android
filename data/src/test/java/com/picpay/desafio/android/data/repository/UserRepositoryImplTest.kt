@@ -8,7 +8,12 @@ import com.picpay.desafio.android.data.source.remote.service.PicPayService
 import com.picpay.desafio.android.domain.models.UserModel
 import com.picpay.desafio.android.domain.repository.UserRepository
 import com.picpay.desafio.android.shared.kotlin.GetCurrentTime
-import io.mockk.*
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.confirmVerified
+import io.mockk.just
+import io.mockk.mockk
+import io.mockk.runs
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
@@ -24,7 +29,7 @@ class UserRepositoryImplTest {
 
     private lateinit var userRepository: UserRepository
 
-    private val currentTimeMock = 1000000000000
+    private val currentTimeMock = 1_000_000_000_000
 
     @Before
     fun `setup test`() {
@@ -116,7 +121,7 @@ class UserRepositoryImplTest {
 
         val usersFlow = flowOf(dbos)
 
-        val oldestUpdatedRegister = 999999970001
+        val oldestUpdatedRegister = 999_999_970_001
 
         coEvery { getCurrentTime() } returns currentTimeMock
         coEvery { dao.getOldestRegisterUpdated() } returns oldestUpdatedRegister
@@ -168,7 +173,7 @@ class UserRepositoryImplTest {
 
         val usersFlow = flowOf(dbos)
 
-        val oldestUpdatedRegister = 999999970000
+        val oldestUpdatedRegister = 999_999_970_000
 
         coEvery { getCurrentTime() } returns currentTimeMock
         coEvery { dao.getOldestRegisterUpdated() } returns oldestUpdatedRegister

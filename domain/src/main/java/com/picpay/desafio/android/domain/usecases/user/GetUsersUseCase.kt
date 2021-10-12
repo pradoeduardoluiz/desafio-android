@@ -6,12 +6,11 @@ import com.picpay.desafio.android.domain.usecases.shared.UseCase
 import kotlinx.coroutines.flow.Flow
 
 class GetUsersUseCase(
-  private val userRepository: UserRepository
+    private val userRepository: UserRepository
 ) : UseCase<GetUsersUseCase.Params, Flow<List<UserModel>>> {
 
-  override suspend fun invoke(params: Params): Flow<List<UserModel>> {
-    return userRepository.getUsers(forceRefresh = params.forceRefresh)
-  }
+    override suspend fun invoke(params: Params): Flow<List<UserModel>> =
+        userRepository.getUsers(forceRefresh = params.forceRefresh)
 
-  data class Params(val forceRefresh: Boolean)
+    data class Params(val forceRefresh: Boolean)
 }
