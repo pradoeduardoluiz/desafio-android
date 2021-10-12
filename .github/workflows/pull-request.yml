@@ -8,8 +8,6 @@ on:
     types: [ opened, reopened, review_requested, ready_for_review ]
 
 jobs:
-  add-reviews:
-    runs-on: ubuntu-latest
   code-analysis:
     name: Run Detekt for static code analysis
     runs-on: ubuntu-18.04
