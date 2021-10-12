@@ -76,6 +76,7 @@ dependencies {
   implementation libs.dagger.hilt.core
   kapt libs.dagger.hilt.compiler
 
+  testImplementation project(":shared:test")
   testImplementation libs.junit.library
   testImplementation libs.mockk
   testImplementation libs.coroutines.test
