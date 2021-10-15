@@ -82,7 +82,7 @@ dependencies {
   testImplementation libs.coroutines.test
   androidTestImplementation libs.junit.ext
 
-  androidTestImplementation "androidx.test:runner:$test_runner_version"
-  androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
-  androidTestImplementation "androidx.test:core-ktx:$core_ktx_test_version"
+  androidTestImplementation libs.androidx.test.runner
+  androidTestImplementation libs.androidx.test.expresso
+  androidTestImplementation libs.androidx.test.core
 }

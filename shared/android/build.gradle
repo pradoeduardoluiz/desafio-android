@@ -20,4 +20,7 @@ dependencies {
     implementation libs.androidx.navigation.library
 
     implementation libs.google.material
+
+    testImplementation libs.junit.library
+    testImplementation libs.mockk
 }
